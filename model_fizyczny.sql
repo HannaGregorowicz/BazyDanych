@@ -22,8 +22,8 @@ INSERT INTO ksiazka VALUES (1, 'Harry Potter i Czara Ognia', 'J.K. Rowling', 39.
 DROP TABLE IF EXISTS klient;
 CREATE TABLE klient (
 id_kl INT(10) NOT NULL AUTO_INCREMENT,
-login VARCHAR(30) NOT NULL,
-haslo VARCHAR(30) NOT NULL,
+login VARCHAR(30) NOT NULL UNIQUE,
+haslo VARCHAR(45) NOT NULL,
 email VARCHAR(50) NOT NULL,
 imie VARCHAR(20) DEFAULT NULL,
 nazwisko VARCHAR(30) DEFAULT NULL,
@@ -35,48 +35,51 @@ kod_pocztowy VARCHAR(10) DEFAULT NULL,
 PRIMARY KEY (id_kl)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
-INSERT INTO klient VALUES (1, 'alakowalska', '123456', 'akowalska@wp.pl', 'Alicja', 'Kowalska', 'Warszawa', 'Pomorska', '3', '26', '21-030'),
-(2, 'matino', 'KrolZycia123', 'matin@o2.pl', 'Mateusz', 'Nowak', 'Gdynia', 'Sienkiewicza', '8', '11a', '43-997'),
-(3, 'bialywilk', 'yenneferlove', 'zlecenia@kaermorhen.com', 'Geralt', 'Riv', 'Rivia', 'Kaer Morhen', '7', '-', '12-345'),
-(4, 'llovegood', 'chrapakKretorogi', 'luna@magia.pl', 'Luna', 'Lovegood', 'Londyn', 'Hogwart', '2', '3c', '13-246'),
-(5, 'Sauron', 'frodobaggins','sauron@mordor.com', 'Sauron', 'Oko', 'Mordor', 'wulkan', '1', '1', '66-666');
+INSERT INTO klient VALUES (1, 'alakowalska', MD5('123456'), 'akowalska@wp.pl', 'Alicja', 'Kowalska', 'Warszawa', 'Pomorska', '3', '26', '21-030'),
+(2, 'matino', MD5('KrolZycia123'), 'matin@o2.pl', 'Mateusz', 'Nowak', 'Gdynia', 'Sienkiewicza', '8', '11a', '43-997'),
+(3, 'bialywilk', MD5('yenneferlove'), 'zlecenia@kaermorhen.com', 'Geralt', 'Riv', 'Rivia', 'Kaer Morhen', '7', '-', '12-345'),
+(4, 'llovegood', MD5('chrapakKretorogi'), 'luna@magia.pl', 'Luna', 'Lovegood', 'Londyn', 'Hogwart', '2', '3c', '13-246'),
+(5, 'Sauron', MD5('frodobaggins'),'sauron@mordor.com', 'Sauron', 'Oko', 'Mordor', 'wulkan', '1', '1', '66-666');
 
 DROP TABLE IF EXISTS zamowienie;
 CREATE TABLE zamowienie (
 id_z INT(10) NOT NULL AUTO_INCREMENT,
-kl_id INT(10) DEFAULT NULL,
+kl_id INT(10) NOT NULL,
 data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 status ENUM('zlozone', 'oplacone', 'w realizacji', 'wyslane', 'doreczone', 'zwrot') DEFAULT 'zlozone',
+koszt DECIMAL(5,2) DEFAULT 0,
 PRIMARY KEY (id_z),
 CONSTRAINT klienci FOREIGN KEY (kl_id) REFERENCES klient(id_kl) ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
-INSERT INTO zamowienie VALUES (1, 1, '2020-05-04 21:26:22', 'zlozone'), (2, 3, '2019-03-24 10:16:52', 'doreczone'), 
+INSERT INTO zamowienie (id_z, kl_id, data, status) VALUES (1, 1, '2020-05-04 21:26:22', 'zlozone'), (2, 3, '2019-03-24 10:16:52', 'doreczone'), 
 (3, 2, '2017-05-30 09:51:37', 'w realizacji'), (4, 5, '2020-02-11 23:31:12', 'zwrot'), (5, 4, '2017-05-05 15:48:40', 'doreczone');
+
 
 DROP TABLE IF EXISTS szczegoly;
 CREATE TABLE szczegoly (
 id_s INT(10) NOT NULL AUTO_INCREMENT,
-ks_id INT(10) DEFAULT NULL,
-z_id INT(10) DEFAULT NULL,
+ks_id INT(10) NOT NULL,
+z_id INT(10) NOT NULL,
 sztuk INT(10) DEFAULT NULL,
 PRIMARY KEY(id_s),
 CONSTRAINT zamowienia FOREIGN KEY (z_id) REFERENCES zamowienie(id_z) ON UPDATE CASCADE,
 CONSTRAINT ksiazka1 FOREIGN KEY (ks_id) REFERENCES ksiazka(id_ks) ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
-INSERT INTO szczegoly VALUES (1,1,2,2), (2,1,1,3), (3,2,1,6), (4,2,1,5), (5,3,1,4), (6,4,2,2), (7,5,1,1);
+INSERT INTO szczegoly VALUES (1,2,1,2), (2,3,1,1), (3,6,2,1), (4,5,2,1), (5,4,3,1), (6,1,4,2), (7,1,5,1);
 
 DROP TABLE IF EXISTS opinia;
 CREATE TABLE opinia (
 id_o INT(10) NOT NULL AUTO_INCREMENT,
 ocena ENUM('1', '2', '3', '4', '5') NOT NULL,
 opis VARCHAR(200) DEFAULT NULL,
-ks_id INT(10) DEFAULT NULL,
-kl_id INT(10) DEFAULT NULL,
+ks_id INT(10) NOT NULL,
+kl_id INT(10) NOT NULL,
 PRIMARY KEY(id_o),
 CONSTRAINT klienci2 FOREIGN KEY (kl_id) REFERENCES klient(id_kl) ON UPDATE CASCADE,
-CONSTRAINT ksiazka FOREIGN KEY (ks_id) REFERENCES ksiazka(id_ks) ON UPDATE CASCADE
+CONSTRAINT ksiazka FOREIGN KEY (ks_id) REFERENCES ksiazka(id_ks) ON UPDATE CASCADE,
+CONSTRAINT unOpinia UNIQUE (ks_id, kl_id)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
 INSERT INTO opinia VALUES (1, '3', 'Historia jest niespojna. Daje ocene wyzej za glowna postac.', 6, 3),
