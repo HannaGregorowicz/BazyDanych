@@ -1,0 +1,50 @@
+body {
+  background-color: lightgray;
+}
+
+#toolbar {
+	margin-top: 40px;
+	margin-left: 80px;
+	margin-right: 80px;
+	padding: 10px;
+	border: 1px solid black;
+	display: flex;
+    justify-content: space-between;
+	background: gray;
+}
+
+a {
+	color: white;
+	font-size: 22px;
+}
+
+a:hover {
+	color: yellow;
+}
+
+form {
+	display: inline;
+}
+
+#main {
+	margin-top: 20px;
+	margin-left: 80px;
+	margin-right: 80px;
+	padding: 10px;
+	border: 1px solid black;
+	background: Snow;
+}
+
+footer {
+	margin-top: 20px;
+	margin-left: 80px;
+	margin-right: 80px;
+	padding: 10px;
+	border: 1px solid black;
+	background: gray;
+	color: white;
+	text-align: center;
+}
+	
+	
+	

@@ -1,0 +1,6 @@
+</div>
+<footer>
+Stopka  
+</footer>
+</body>
+</html>
