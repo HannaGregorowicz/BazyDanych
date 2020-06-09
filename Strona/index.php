@@ -35,11 +35,13 @@ include 'baza.php';
 </div>
 <?php
 
-$link = new mysqli("localhost", "hgregorowicz", "...", "hgregorowicz_baza_baza");
+require_once "polaczenie.php";
+
+$link = new mysqli($host, $uzytkownik, $haslo_bazy, $nazwa_bazy);
 if (!$link) die("Nie udało się połączyć.");
-$q = "SELECT tytul, autor, cena, okladka, kategoria, wydawnictwo, rok_wydania FROM ksiazka";
+$q = "SELECT id_ks, tytul, autor, cena, okladka, kategoria, wydawnictwo, rok_wydania FROM ksiazka ORDER BY tytul";
 $result = mysqli_query($link, $q) or die($link->error);
-//pre_r($result->fetch_assoc());
+
 ?>
 <br><br>
 <div>
@@ -59,13 +61,14 @@ $result = mysqli_query($link, $q) or die($link->error);
 		<?php
 			while ($row = $result->fetch_assoc()): ?>
 		<tr>
-			<td><?php echo $row['tytul']; ?></td>
+			<td><?php echo "<a class=\"tytul\" href=\"detal.php?id_ks={$row['id_ks']}\">{$row['tytul']}</a>" ?></td>
 			<td><?php echo $row['autor']; ?></td>
 			<td><?php echo $row['cena']; ?></td>
 			<td><?php echo $row['okladka']; ?></td>
 			<td><?php echo $row['kategoria']; ?></td>
 			<td><?php echo $row['wydawnictwo']; ?></td>
 			<td><?php echo $row['rok_wydania']; ?></td>
+			<td><?php echo "<a class=\"tytul\" href=\"usun_ksiazke.php?id_ks={$row['id_ks']}\">Usuń</a>" ?></td>
 		</tr>
 		<?php endwhile; ?>
 	</table>
@@ -74,11 +77,8 @@ $result = mysqli_query($link, $q) or die($link->error);
 
 
 <?php
-function pre_r ($array) {
-	echo '<pre>';
-	print_r($array);
-	echo '</pre>';
-}
+
+$link->close();
 
 include 'dol.php';
 ?>

@@ -1,5 +1,7 @@
 <?php
 
+require_once "polaczenie.php";
+
 $czy_wypelnione = true;
 
 foreach($_POST as $check => $val) {
@@ -19,10 +21,13 @@ if ($czy_wypelnione) {
 	$liczba = $_POST['liczba'];
 	$rok_wydania = $_POST['rok'];
 	
-	$link = new mysqli("localhost", "hgregorowicz", "...", "hgregorowicz_baza_baza");
+	$link = new mysqli($host, $uzytkownik, $haslo_bazy, $nazwa_bazy);
 	if (!$link) die("Nie udało się połączyć.");
 	$q = "INSERT INTO ksiazka (tytul, autor, cena, okladka, kategoria, liczba, wydawnictwo, rok_wydania) VALUES ('$tytul', '$autor', $cena, '$okladka', '$kategoria', $liczba, '$wydawnictwo', $rok_wydania)";
 	$result = mysqli_query($link, $q) or die($link->error);
 }
+
+$link->close();
+header('Location: index.php');
 ?>
 
