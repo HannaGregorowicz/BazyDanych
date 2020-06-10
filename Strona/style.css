@@ -14,12 +14,12 @@ body {
 }
 
 a {
-	color: white;
-	font-size: 22px;
+	color: black;
+	font-size: 16px;
 }
 
 a:hover {
-	color: yellow;
+	color: DarkOrchid;
 }
 
 form {
@@ -47,12 +47,18 @@ footer {
 }
 	
 	
-.tytul {
-	color: black;
-	font-size: 16px;
-	
+.menu {
+	color: white;
+	font-size: 22px;
+
 }	
 
-a.tytul:hover {
-	color: DarkOrchid;
+a.menu:hover {
+	color: yellow;
+}
+
+.blad {
+	color: red;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }

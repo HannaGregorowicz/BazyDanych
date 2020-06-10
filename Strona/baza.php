@@ -10,21 +10,21 @@ session_start();
 </head>
 <body>
 <div id="toolbar">
-	<a href="index.php">Strona główna </a>
+	<a class="menu" href="index.php">Strona główna </a>
 	<form action="szukaj.php" method="POST"> 
 		<input type="text" name="search" value="Wpisz tytuł lub autora">
 		<input type="submit" value="Szukaj">
 	</form>
-	<a href="koszyk.php">Twój koszyk </a>
-	<a href="kontakt.php">Kontakt </a>
+	<a class="menu" href="koszyk.php">Twój koszyk </a>
+	<a class="menu" href="kontakt.php">Kontakt </a>
 	<?php 
 	if (isset($_SESSION['zalogowano']) && $_SESSION['zalogowano'] == true) {
-		echo '<a href="profil.php">Profil </a>';
-		echo '<a href="wyloguj.php">Wyloguj </a>';
+		echo '<a class="menu" href="profil.php">Profil </a>';
+		echo '<a class="menu" href="wyloguj.php">Wyloguj </a>';
 }
 	else {
-		echo '<a href="rejestracja.php">Rejestracja </a>';
-		echo '<a href="logowanie.php">Logowanie </a>';
+		echo '<a class="menu" href="rejestracja.php">Rejestracja </a>';
+		echo '<a class="menu" href="logowanie.php">Logowanie </a>';
 }
 	?>
 </div>

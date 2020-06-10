@@ -35,7 +35,7 @@ mysqli_real_escape_string($link, $szukanie))) or die($link->error);
 		<?php
 			while ($row = $result->fetch_assoc()): ?>
 		<tr>
-			<td><?php echo "<a class=\"tytul\" href=\"detal.php?id_ks={$row['id_ks']}\">{$row['tytul']}</a>" ?></td>
+			<td><?php echo "<a href=\"detal.php?id_ks={$row['id_ks']}\">{$row['tytul']}</a>" ?></td>
 			<td><?php echo $row['autor']; ?></td>
 			<td><?php echo $row['cena']; ?></td>
 			<td><?php echo $row['okladka']; ?></td>

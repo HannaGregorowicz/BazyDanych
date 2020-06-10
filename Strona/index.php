@@ -4,6 +4,8 @@ $title = "BestBooks.pl";
 include 'baza.php';
 
 ?>
+
+<?php if (isset($_SESSION['zalogowano']) && $_SESSION['zalogowano'] == true) : ?>
 <div id="nowa_ksiazka">
 	<form action="dodaj_ksiazke.php" method="POST">
 		<input type="text" name="tytul" value="Wpisz tytuł">
@@ -33,7 +35,11 @@ include 'baza.php';
 		<input type="submit" value="Dodaj" style="float: right">
 	</form>
 </div>
+<br><br>
+<?php endif; ?>
+
 <?php
+
 
 require_once "polaczenie.php";
 
@@ -43,7 +49,7 @@ $q = "SELECT id_ks, tytul, autor, cena, okladka, kategoria, wydawnictwo, rok_wyd
 $result = mysqli_query($link, $q) or die($link->error);
 
 ?>
-<br><br>
+
 <div>
 	<table>
 		<thead>
@@ -61,7 +67,7 @@ $result = mysqli_query($link, $q) or die($link->error);
 		<?php
 			while ($row = $result->fetch_assoc()): ?>
 		<tr>
-			<td><?php echo "<a class=\"tytul\" href=\"detal.php?id_ks={$row['id_ks']}\">{$row['tytul']}</a>" ?></td>
+			<td><?php echo "<a href=\"detal.php?id_ks={$row['id_ks']}\">{$row['tytul']}</a>" ?></td>
 			<td><?php echo $row['autor']; ?></td>
 			<td><?php echo $row['cena']; ?></td>
 			<td><?php echo $row['okladka']; ?></td>

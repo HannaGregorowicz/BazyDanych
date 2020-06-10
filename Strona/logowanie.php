@@ -5,7 +5,7 @@ if (isset($_SESSION['zalogowano']) && $_SESSION['zalogowano'] == true) {
 	exit();
 }
 
-$title = "BestBooks.pl";
+$title = "Logowanie";
 include 'baza.php';
 ?>
 
@@ -14,13 +14,23 @@ Login: <br>
 <input type="text" name="login"><br>
 
 Hasło: <br>
-<input type="password" name="haslo"><br><br>
-<input type="submit" value="Zaloguj">
-</form>
-
+<input type="password" name="haslo"><br>
 <?php
 if (isset($_SESSION['blad_logowania'])) {
-	echo $_SESSION['blad_logowania'];
+	echo $_SESSION['blad_logowania']."<br>";
 }
+?>
+<br>
+<input type="submit" value="Zaloguj">
+</form>
+<br>
+
+
+
+
+<br>
+Nie masz jeszcze konta? <a href="rejestracja.php">Zarejestruj się!</a>
+
+<?php
 include 'dol.php';
 ?>
