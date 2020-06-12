@@ -46,7 +46,7 @@ CREATE TABLE zamowienie (
 id_z INT(10) NOT NULL AUTO_INCREMENT,
 kl_id INT(10) NOT NULL,
 data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-status ENUM('zlozone', 'oplacone', 'w realizacji', 'wyslane', 'doreczone', 'zwrot') DEFAULT 'zlozone',
+status ENUM('w trakcie', 'zlozone', 'oplacone', 'w realizacji', 'wyslane', 'doreczone', 'zwrot') DEFAULT 'w trakcie',
 koszt DECIMAL(5,2) DEFAULT 0,
 PRIMARY KEY (id_z),
 CONSTRAINT klienci FOREIGN KEY (kl_id) REFERENCES klient(id_kl) ON UPDATE CASCADE
