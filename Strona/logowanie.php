@@ -25,9 +25,6 @@ if (isset($_SESSION['blad_logowania'])) {
 </form>
 <br>
 
-
-
-
 <br>
 Nie masz jeszcze konta? <a href="rejestracja.php">Zarejestruj się!</a>
 

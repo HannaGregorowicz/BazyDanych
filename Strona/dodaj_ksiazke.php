@@ -28,6 +28,6 @@ if ($czy_wypelnione) {
 }
 
 $link->close();
-header('Location: index.php');
+header('Location: admin.php');
 ?>
 

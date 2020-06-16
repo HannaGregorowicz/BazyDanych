@@ -1,8 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['zalogowano']) || $_SESSION['zalogowano'] == false) {
-	header('Location: index.php');
-}
+
 
 require_once "polaczenie.php";
 
@@ -25,7 +23,7 @@ if (isset($_POST['submit'])) {
 	$q = "UPDATE ksiazka SET tytul='$tytul', autor='$autor', cena='$cena', okladka='$okladka', kategoria='$kategoria', liczba='$liczba', wydawnictwo='$wydawnictwo' WHERE id_ks='$id_ks'";
 	
 	mysqli_query($link, $q) or die($link->error);
-	header('Location: index.php');
+	header('Location: admin.php');
 	
 }
 else {

@@ -23,6 +23,14 @@ $result = mysqli_query($link, $q) or die($link->error);
 $row = $result->fetch_assoc();
 
 echo "<h2>".$row['tytul']."</h2>";
+
+if (isset($_GET['admin']) && $_GET['admin']=='true') {
+	echo "<a class=\"tytul\" href=\"edytuj_ksiazke.php?id_ks={$id_ks}\">Edytuj</a>";
+	echo "   ";
+	echo "<a class=\"tytul\" href=\"usun_ksiazke.php?id_ks='$id_ks'\">Usuń</a>";
+	
+}
+
 echo "<h3>".$row['autor']."</h3>";
 echo "<h3>Cena: ".$row['cena']." zł</h3>";
 echo "Wydawnictwo: ".$row['wydawnictwo']."<br>";
@@ -79,9 +87,9 @@ if ($ile_ocen>0) :
 			<td><?php echo $row1['login']; ?></td>
 			<td>Ocena: <?php echo $row1['ocena']; ?>/5</td>
 			<td><?php echo $row1['opis']; ?></td>
-			<?php if ($id_kl==$row1['kl_id']) :?>
-			<td><form method="POST" action="opinie.php?tr=edytuj&id_o=<?php echo $row1['id_o'];?>&id_ks=<?php echo $id_ks?>"><input type="submit" name="edytuj" value="Edytuj"></form></td>
-			<td><form method="POST" action="opinie.php?tr=usun&id_o=<?php echo $row1['id_o'];?>&id_ks=<?php echo $id_ks?>"><input type="submit" name="usun" value="Usuń"></form></td>
+			<?php if ($id_kl==$row1['kl_id'] || $_GET['admin']=='true') :?>
+			<td><form method="POST" action="opinie.php?tr=edytuj&id_o=<?php echo $row1['id_o'];?>&id_ks=<?php echo $id_ks?>&admin=true"><input type="submit" name="edytuj" value="Edytuj"></form></td>
+			<td><form method="POST" action="opinie.php?tr=usun&id_o=<?php echo $row1['id_o'];?>&id_ks=<?php echo $id_ks?>&admin=true"><input type="submit" name="usun" value="Usuń"></form></td>
 			<?php endif; ?>
 
 		</tr>

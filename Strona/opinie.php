@@ -1,8 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['zalogowano']) || $_SESSION['zalogowano'] == false) {
-	header('Location: index.php');
-}
 
 include 'baza.php';
 
@@ -29,10 +26,10 @@ else if ($tryb=='edytuj') {
 	$row = $result->fetch_assoc();
 	$ocena = $row['ocena'];
 	$opis = $row['opis'];
-	
+	//echo $_GET['admin'];
 	?>
 	<h4> Edytuj opinię</h4>
-	<form method="POST" action="opinie.php?tr=edytuj1&id_o=<?php echo $id_o ?>&id_ks=<?php echo $id_ks?>">
+	<form method="POST" action="opinie.php?tr=edytuj1&id_o=<?php echo $id_o ?>&id_ks=<?php echo $id_ks?>&admin=true">
 		Ocena: <select name="ocena">
 			<option value="1" <?php if ($ocena=="1") echo "selected";?>>1</option>
 			<option value="2" <?php if ($ocena=="2") echo "selected";?>>2</option>
@@ -54,7 +51,11 @@ else if ($tryb=='edytuj1') {
 		$opis = $_POST['opinia'];
 		$q = "UPDATE opinia SET ocena='$ocena', opis='$opis' WHERE id_o='$id_o'";
 		mysqli_query($link, $q) or die($link->error);
-		header("Location: detal.php?id_ks=$id_ks");
+		if ($_GET['admin']=='true') {
+			header("Location: detal.php?id_ks=$id_ks&admin=true");
+		} else {
+			header("Location: detal.php?id_ks=$id_ks");
+		}
 	}
 }
 
@@ -64,7 +65,12 @@ else if ($tryb=='usun') {
 	echo $id_ks;
 	$q = "DELETE FROM opinia WHERE id_o='$id_o'";
 	mysqli_query($link, $q) or die($link->error);
-	header("Location: detal.php?id_ks=$id_ks");
+	if ($_GET['admin']=='true') {
+		header("Location: detal.php?id_ks=$id_ks&admin=true");
+	} else {
+		header("Location: detal.php?id_ks=$id_ks");
+	}
+	
 }
 else
 	echo "Błąd";

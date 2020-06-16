@@ -3,21 +3,21 @@
 $title = "Wyszukiwanie";
 include 'baza.php';
 
-$szukanie = $_POST['search'];
-echo $szukanie;
+$szukanie = $_GET['search'];
+
 $szukanie = htmlentities($szukanie, ENT_QUOTES, "UTF-8");
 
 require_once "polaczenie.php";
 $link = new mysqli($host, $uzytkownik, $haslo_bazy, $nazwa_bazy);
 if (!$link) die("Nie udało się połączyć.");
 
-$result = mysqli_query($link, sprintf("SELECT * FROM ksiazka WHERE tytul like '%%%s%%' OR autor like '%%%s%%' ORDER BY tytul", 
+$result = mysqli_query($link, sprintf("SELECT * FROM ksiazka WHERE id_ks>0 and (tytul like '%%%s%%' OR autor like '%%%s%%') ORDER BY tytul", 
 mysqli_real_escape_string($link, $szukanie),
 mysqli_real_escape_string($link, $szukanie))) or die($link->error);
 
 ?>
 
-<br><br>
+<br>
 <div>
 	<table>
 		<thead>
@@ -42,7 +42,6 @@ mysqli_real_escape_string($link, $szukanie))) or die($link->error);
 			<td><?php echo $row['kategoria']; ?></td>
 			<td><?php echo $row['wydawnictwo']; ?></td>
 			<td><?php echo $row['rok_wydania']; ?></td>
-			<td><?php echo "<a class=\"tytul\" href=\"usun_ksiazke.php?id_ks={$row['id_ks']}\">Usuń</a>" ?></td>
 		</tr>
 		<?php endwhile; ?>
 	</table>

@@ -11,11 +11,13 @@ session_start();
 <body>
 <div id="toolbar">
 	<a class="menu" href="index.php">Strona główna </a>
-	<form action="szukaj.php" method="POST"> 
+	<form action="szukaj.php" method="GET"> 
 		<input type="text" name="search" value="Wpisz tytuł lub autora">
 		<input type="submit" value="Szukaj">
 	</form>
+	<?php if (isset($_SESSION['zalogowano']) && $_SESSION['zalogowano'] == true) :?>
 	<a class="menu" href="koszyk.php">Twój koszyk </a>
+	<?php endif;?>
 	<a class="menu" href="kontakt.php">Kontakt </a>
 	<?php 
 	if (isset($_SESSION['zalogowano']) && $_SESSION['zalogowano'] == true) {

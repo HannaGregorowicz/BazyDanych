@@ -29,7 +29,7 @@ if (isset($_POST['zloz'])) {
 }
 
 
-$q = "SELECT * FROM ksiazka JOIN szczegoly ON ks_id=id_ks WHERE z_id='$id_z'";
+$q = "SELECT * FROM ksiazka JOIN szczegoly ON ks_id=id_ks WHERE id_ks>0 AND z_id='$id_z'";
 $wynik = mysqli_query($link, $q) or die($link->error);
 
 
